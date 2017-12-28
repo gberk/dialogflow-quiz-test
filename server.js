@@ -60,6 +60,7 @@ var isAnAnswer = function(guess,answers){
     var answer = null;
     guess = guess.toLowerCase();
     answers.some(function(ans){
+        console.log(ans)
         if(ans.key.toLowerCase() === guess){
             answer = ans;
             return true;
