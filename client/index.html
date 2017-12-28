@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        var ctx = function() {
+            this.listening = false;
+            this.stopListening = function(){
+                console.log("stop listening");
+                this.listening = false;
+            }
+            this.startListening = function(){
+                console.log("start listening");
+                this.listening = true;
+            }
+
+        }()
+
+        document.addEventListener('keyup', function(e){
+            if(e.keyCode == 32){
+                if(this.listening){
+                    this.stopListening();
+                } else {
+                    this.startListening();
+                }
+            }
+        }.bind(ctx));
+
+    </script>
+</head>
+<body>
+    <div id="speechBubble">
+        Ready for a guess
+    </div>
+</body>
+</html>
