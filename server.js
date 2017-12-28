@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 
-var statesQuiz = require('./statesQuiz');
+var famousPeopleQuiz = require('./famousPeopleQuiz');
 var rp = require('request-promise');
 require('dotenv').config();
 
@@ -13,8 +13,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(process.env.PORT||4000);
 
 app.post('/guess', function(req,res){
+
+
+
     var guess = req.body.result.parameters.guess;
-    var answers = statesQuiz.questions[0].answers;
+    var answers = famousPeopleQuiz.questions[0].answers;
     var result = dialogflowResponse();
     var answer = isAnAnswer(guess,answers);
     result.speech = answer ? answer.key : "Not an answer";
