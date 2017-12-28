@@ -28,16 +28,15 @@ app.post('/guess', function(req,res){
         result.speech = "Welcome to Trivia. What game would you like to play?"
     }
 
-    else if (intent === 'startNameGame') {
+    else if (intent === 'startGame') {
+        var game = req.body.result.parameters.game;
         result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
         result.speech = statesQuiz.questions[0].text;
-        currentGame = 'nameGame';
-    }
-
-    else if (intent === 'startFamousPersonGame') {
-        result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
-        result.speech = famousPeopleQuiz.questions[0].text;
-        currentGame = 'famousGame';
+        if (game === 'name') {
+            currentGame = 'nameGame';
+        } else {
+            currentGame = 'famousGame';
+        }
     }
 
     else if (intent === 'guess') {
@@ -55,7 +54,6 @@ app.post('/guess', function(req,res){
             var answer = isAnAnswer(guess,answers);
             result.speech = answer ? answer.key : "Not an answer";
         }
-        
     }
     else {
         result.speech = "We had a problem doing a flip."
