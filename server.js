@@ -27,12 +27,13 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'startNameGame') {
         result.contextOut = [{"name":NAME_GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
-        result.speech = "Name 5 states in the United States";
+        result.speech = stateQuize.questions[0].text;
     }
 
     else if (intent === 'guess') {
         var guess = req.body.result.parameters.guess;
         var answers = statesQuiz.questions[0].answers;
+        console.log(answers)
         var result = dialogflowResponse();
         var answer = isAnAnswer(guess,answers);
         result.speech = answer ? answer.key : "Not an answer";
