@@ -18,8 +18,8 @@ app.post('/guess', function(req,res){
     console.log(guess);
     var answers = statesQuiz.questions[0].answers;
     var result = {}
-    res.speech = isAnAnswer(guess,answers) || "Not an answer"
-    res.send()
+    result.speech = isAnAnswer(guess,answers) || "Not an answer"
+    res.send(result)
 })
 
 var isAnAnswer = function(guess,answers){
