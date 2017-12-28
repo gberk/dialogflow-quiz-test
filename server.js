@@ -14,7 +14,12 @@ app.listen(process.env.PORT||4000);
 
 app.post('/guess', function(req,res){
 
+    // var intent = req.body.result.action;
+    console.log(req.body)
 
+    // if (intent === 'startNameGame') {
+        
+    // }
 
     var guess = req.body.result.parameters.guess;
     var answers = famousPeopleQuiz.questions[0].answers;
