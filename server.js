@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 
-var statesQuiz = require('./statesQuiz')
+var statesQuiz = require('./statesQuiz');
 var rp = require('request-promise');
 require('dotenv').config();
 
@@ -11,11 +11,15 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // app.use(express.static('client'));
 app.listen(process.env.PORT||4000);
+
 app.post('/guess', function(req,res){
+    console.log(req.body)
     var guess = req.body.queryResult.parameters.guess;
+    console.log(guess);
     var answers = statesQuiz.questions[0].answers;
-    var result = isAnAnswer(guess,answers) || "Not an answer";
-    res.send(result)
+    var result = {}
+    res.speech = isAnAnswer(guess,answers) || "Not an answer"
+    res.send()
 })
 
 var isAnAnswer = function(guess,answers){
@@ -32,5 +36,5 @@ var isAnAnswer = function(guess,answers){
             }
         }));
     });
-    return answer;
+    return answer.key;
 }
