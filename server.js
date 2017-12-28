@@ -27,7 +27,7 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'startNameGame') {
         result.contextOut = [{"name":NAME_GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
-        result.speech = stateQuize.questions[0].text;
+        result.speech = statesQuiz.questions[0].text;
     }
 
     else if (intent === 'guess') {
