@@ -18,7 +18,6 @@ const TURNS_ARG = 'turns';
 app.post('/guess', function(req,res){
     
     var intent = req.body.result.action;
-    console.log(intent)
     var result = dialogflowResponse();
 
     if (intent === 'input.welcome') {
