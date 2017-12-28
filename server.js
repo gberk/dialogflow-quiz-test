@@ -32,7 +32,7 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'guess') {
         var guess = req.body.result.parameters.guess;
-        var answers = famousPeopleQuiz.questions[0].answers;
+        var answers = stateQuiz.questions[0].answers;
         var result = dialogflowResponse();
         var answer = isAnAnswer(guess,answers);
         result.speech = answer ? answer.key : "Not an answer";
