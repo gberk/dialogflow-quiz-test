@@ -31,8 +31,9 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'guess') {
         var guess = req.body.result.parameters.guess;
+        console.log("guess: " + guess)
         var answers = statesQuiz.questions[0].answers;
-        console.log(answers)
+        console.log("answers:" + answers)
         var result = dialogflowResponse();
         var answer = isAnAnswer(guess,answers);
         result.speech = answer ? answer.key : "Not an answer";
@@ -59,7 +60,7 @@ var isAnAnswer = function(guess,answers){
     var answer = null;
     guess = guess.toLowerCase();
     answers.some(function(ans){
-        console.log(ans)
+        console.log("ans: " + ans)
         if(ans.key.toLowerCase() === guess){
             answer = ans;
             return true;
