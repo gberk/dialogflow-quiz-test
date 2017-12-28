@@ -17,6 +17,8 @@ app.listen(process.env.PORT||4000);
 const GAME = 'game';
 const TURNS_ARG = 'turns';
 
+var currentGame;
+
 app.post('/guess', function(req,res){
     
     var intent = req.body.result.action;
@@ -29,20 +31,31 @@ app.post('/guess', function(req,res){
     else if (intent === 'startNameGame') {
         result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
         result.speech = statesQuiz.questions[0].text;
+        currentGame = 'nameGame';
     }
 
     else if (intent === 'startFamousPersonGame') {
         result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
         result.speech = famousPeopleQuiz.questions[0].text;
+        currentGame = 'famousGame';
     }
 
     else if (intent === 'guess') {
         console.log(req.body);
-        var guess = req.body.result.parameters.guess;
-        var answers = statesQuiz.questions[0].answers;
-        var result = dialogflowResponse();
-        var answer = isAnAnswer(guess,answers);
-        result.speech = answer ? answer.key : "Not an answer";
+        if (currentGame === 'nameGame') {
+            var guess = req.body.result.parameters.guess;
+            var answers = statesQuiz.questions[0].answers;
+            var result = dialogflowResponse();
+            var answer = isAnAnswer(guess,answers);
+            result.speech = answer ? answer.key : "Not an answer";
+        } else {
+            var guess = req.body.result.parameters.guess;
+            var answers = famousPeopleQuiz.questions[0].answers;
+            var result = dialogflowResponse();
+            var answer = isAnAnswer(guess,answers);
+            result.speech = answer ? answer.key : "Not an answer";
+        }
+        
     }
     else {
         result.speech = "We had a problem doing a flip."
