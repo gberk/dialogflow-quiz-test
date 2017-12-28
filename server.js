@@ -3,6 +3,8 @@ var app = express();
 var server = require('http').createServer(app);
 
 var statesQuiz = require('./statesQuiz');
+var famousPeopleQuiz = require('./famousPeopleQuiz');
+
 var rp = require('request-promise');
 require('dotenv').config();
 
@@ -12,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // app.use(express.static('client'));
 app.listen(process.env.PORT||4000);
 
-const NAME_GAME = 'nameGame';
+const GAME = 'game';
 const TURNS_ARG = 'turns';
 
 app.post('/guess', function(req,res){
@@ -25,16 +27,19 @@ app.post('/guess', function(req,res){
     }
 
     else if (intent === 'startNameGame') {
-        result.contextOut = [{"name":NAME_GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
+        result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
         result.speech = statesQuiz.questions[0].text;
     }
 
+    else if (intent === 'startFamousPersonGame') {
+        result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
+        result.speech = famousPeopleQuiz.questions[0].text;
+    }
+
     else if (intent === 'guess') {
-        console.log(req.body)
+        console.log(req.body);
         var guess = req.body.result.parameters.guess;
-        console.log("guess: " + guess)
         var answers = statesQuiz.questions[0].answers;
-        console.log("answers:" + answers)
         var result = dialogflowResponse();
         var answer = isAnAnswer(guess,answers);
         result.speech = answer ? answer.key : "Not an answer";
@@ -61,7 +66,6 @@ var isAnAnswer = function(guess,answers){
     var answer = null;
     guess = guess.toLowerCase();
     answers.some(function(ans){
-        console.log("ans: " + ans)
         if(ans.key.toLowerCase() === guess){
             answer = ans;
             return true;
