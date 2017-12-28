@@ -17,7 +17,7 @@ app.post('/guess', function(req,res){
     var answers = statesQuiz.questions[0].answers;
     var result = dialogflowResponse();
     var answer = isAnAnswer(guess,answers);
-    result.speech = answer ? answer.key || "Not an answer";
+    result.speech = answer ? answer.key : "Not an answer";
     console.log(result)
     res.send(result)
 })
