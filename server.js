@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 
-var stateQuiz = require('./stateQuiz');
+var statesQuiz = require('./statesQuiz');
 var rp = require('request-promise');
 require('dotenv').config();
 
@@ -32,7 +32,7 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'guess') {
         var guess = req.body.result.parameters.guess;
-        var answers = stateQuiz.questions[0].answers;
+        var answers = statesQuiz.questions[0].answers;
         var result = dialogflowResponse();
         var answer = isAnAnswer(guess,answers);
         result.speech = answer ? answer.key : "Not an answer";
