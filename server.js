@@ -15,7 +15,7 @@ app.listen(process.env.PORT||4000);
 app.post('/guess', function(req,res){
     console.log("here")
     console.log(req.body.result)
-    var guess = req.body.queryResult.parameters.guess;
+    var guess = req.body.result.parameters.guess;
     console.log(guess);
     var answers = statesQuiz.questions[0].answers;
     var result = dialogflowResponse();
