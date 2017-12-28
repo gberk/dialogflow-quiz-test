@@ -13,20 +13,20 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(process.env.PORT||4000);
 
 app.post('/guess', function(req,res){
-
-    // var intent = req.body.result.action;
-    console.log(req.body)
-
-    // if (intent === 'startNameGame') {
-        
-    // }
-
-    var guess = req.body.result.parameters.guess;
-    var answers = famousPeopleQuiz.questions[0].answers;
+    
+    var intent = req.body.result.action;
+    console.log(intent)
     var result = dialogflowResponse();
-    var answer = isAnAnswer(guess,answers);
-    result.speech = answer ? answer.key : "Not an answer";
-    console.log(result)
+    if (intent === 'input.welcome') {
+        result.speech = "Welcome to Trivia."
+    }
+
+    // var guess = req.body.result.parameters.guess;
+    // var answers = famousPeopleQuiz.questions[0].answers;
+    // var result = dialogflowResponse();
+    // var answer = isAnAnswer(guess,answers);
+    // result.speech = answer ? answer.key : "Not an answer";
+    // console.log(result)
     res.send(result)
 })
 
