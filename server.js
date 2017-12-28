@@ -13,14 +13,26 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(process.env.PORT||4000);
 
 app.post('/guess', function(req,res){
-    console.log(req.body)
+    console.log("here")
+    console.log(req.body.result)
     var guess = req.body.queryResult.parameters.guess;
     console.log(guess);
     var answers = statesQuiz.questions[0].answers;
-    var result = {}
+    var result = dialogflowResponse();
     result.speech = isAnAnswer(guess,answers) || "Not an answer"
     res.send(result)
 })
+
+var dialogflowResponse = function(){
+    return {
+        speech: "",
+        displayText: "",
+        data: {},
+        contextOut: [],
+        source: "",
+        followupEvent: {}
+    }
+}
 
 var isAnAnswer = function(guess,answers){
     var answer = null;
