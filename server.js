@@ -38,6 +38,7 @@ var isAnAnswer = function(guess,answers){
     var answer = null;
     guess = guess.toLowerCase();
     answers.some(function(ans){
+        if(!ans) return;
         if(ans.key.toLowerCase === guess){ //Should also iterate over phrasings
             answer = ans;
             return true;
