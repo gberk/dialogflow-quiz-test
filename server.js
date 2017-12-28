@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 // app.use(express.static('client'));
-app.listen(4000);
+app.listen(process.env.PORT||4000);
 app.post('/guess', function(req,res){
     var guess = req.result.parameters.guess;
     var answers = statesQuiz.questions[0].answers;
