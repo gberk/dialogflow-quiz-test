@@ -30,6 +30,7 @@ app.post('/guess', function(req,res){
     }
 
     else if (intent === 'guess') {
+        console.log(req.body)
         var guess = req.body.result.parameters.guess;
         console.log("guess: " + guess)
         var answers = statesQuiz.questions[0].answers;
