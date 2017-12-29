@@ -31,10 +31,11 @@ app.post('/guess', function(req,res){
     else if (intent === 'startGame') {
         var game = req.body.result.parameters.game;
         result.contextOut = [{"name":GAME, "lifespan":2, "parameters":{TURNS_ARG:5}}];
-        result.speech = statesQuiz.questions[0].text;
         if (game === 'name') {
+            result.speech = statesQuiz.questions[0].text;
             currentGame = 'nameGame';
         } else {
+            result.speech = famousPeopleQuiz.questions[0].text;
             currentGame = 'famousGame';
         }
     }
