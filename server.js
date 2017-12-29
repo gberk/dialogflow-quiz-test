@@ -42,24 +42,21 @@ app.post('/guess', function(req,res){
 
     else if (intent === 'guess') {
         console.log(req.body);
+        var result = dialogflowResponse();
+        var guess = req.body.result.parameters.guess;
         if (currentGame === 'nameGame') {
-            var guess = req.body.result.parameters.guess;
-            var answers = statesQuiz.questions[0].answers;
-            var result = dialogflowResponse();
-            var answer = isAnAnswer(guess,answers);
-            result.speech = answer ? answer.key : "Not an answer";
+            var answers = statesQuiz.questions[0].answers;           
         } else {
-            var guess = req.body.result.parameters.guess;
             var answers = famousPeopleQuiz.questions[0].answers;
-            var result = dialogflowResponse();
-            var answer = isAnAnswer(guess,answers);
-            result.speech = answer ? answer.key : "Not an answer";
         }
-    }
+        var answer = isAnAnswer(guess,answers);
+        result.speech = answer ? answer.key : "Not an answer";
+    } 
+    
     else {
         result.speech = "We had a problem doing a flip."
     }
-
+    
     res.send(result)
 })
 
